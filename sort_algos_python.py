@@ -9,7 +9,8 @@ from tkinter import *
 from tkinter import ttk
 import random
 from bubble_sort import bubble_sort
-
+from merge_sort import merge_sort
+from quick_sort import quick_sort
 root=Tk()
 root.title('Sorting Algorithms Visualized')
 root.maxsize(900,600)
@@ -55,7 +56,21 @@ def Generate():
 
 def startAlgo():
     global data
-    bubble_sort(data,drawData,speedScale.get())
+    #if not data:
+     #   return
+    if algMenu.get()=='Bubble Sort':
+        bubble_sort(data,drawData,speedScale.get())
+        drawData(data,['green' for x in range(len(data))])
+    elif algMenu.get()=='Merge Sort':
+        merge_sort(data,drawData,speedScale.get())
+        drawData(data,['green' for x in range(len(data))])
+    elif algMenu.get()=='Quick Sort':
+        quick_sort(data,0,len(data)-1,drawData,speedScale.get())
+        drawData(data,['green' for x in range(len(data))])
+    #bubble_sort(data,drawData,speedScale.get())
+        
+    
+        
     
 #base_layout
 UI_Frame=Frame(root,width=600,height=200,bg='grey')
@@ -65,7 +80,7 @@ canvas.grid(row=1,column=0,padx=10,pady=5)
 
 #UIArea
 Label(UI_Frame,text='Algorithm: ',bg='grey').grid(row=0,column=0,padx=5,pady=5,sticky=W)
-algMenu=ttk.Combobox(UI_Frame,textvariable=selected_alg,values=['Bubble Sort','Merge Sort'])
+algMenu=ttk.Combobox(UI_Frame,textvariable=selected_alg,values=['Bubble Sort','Quick Sort','Merge Sort'])
 algMenu.grid(row=0,column=1,padx=5,pady=5)
 algMenu.current(0)
 speedScale=Scale(UI_Frame,from_=0.1,to=2.0,length=200,digits=2,resolution=0.2,orient='horizontal',label='Select Speed[s]')
